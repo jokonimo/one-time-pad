@@ -1,0 +1,32 @@
+{
+  "name": "onetimepad",
+  "version": "1.0.0",
+  "description": "one time pad implementation. Don't mind me",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "test": "jest",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokonimo/one-time-pad.git"
+  },
+  "keywords": [
+    "one",
+    "time",
+    "pad"
+  ],
+  "author": "Jonas Kolbeck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jokonimo/one-time-pad/issues"
+  },
+  "homepage": "https://github.com/jokonimo/one-time-pad#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
