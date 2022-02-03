@@ -1,32 +1,50 @@
-export const encryptDecryptXOR = (message: string, key: string): string => {
-    checkParams(message, key);
-    let encryptedString = "";
-    for (let index = 0; index < message.length; index++) {
-        encryptedString += String.fromCharCode(message.charCodeAt(index) ^ key.charCodeAt(index));
+abstract class templateAlgo {
+    encrypt = (message: string, key: string): string => {
+        this.checkParams(message, key);
+        let enCryptedString = "";
+        for (let index = 0; index < message.length; index++) {
+            enCryptedString += String.fromCharCode(this.encryptChar(message.charCodeAt(index), key.charCodeAt(index)));
+        }
+        return enCryptedString;
     }
-    return encryptedString;
+
+    decrypt = (message: string, key: string): string => {
+        this.checkParams(message, key);
+        let decryptedString = "";
+        for (let index = 0; index < message.length; index++) {
+            decryptedString += String.fromCharCode(this.decryptChar(message.charCodeAt(index), key.charCodeAt(index)));
+        }
+        return decryptedString;
+    }
+
+    checkParams = (message: string, key: string) => {
+        if (message.length < key.length) {
+            throw new Error("key needs to atleast length of the message");
+        }
+    }
+
+
+    protected abstract encryptChar(charCodeMessage: number, charCodeKey: number): number;
+    protected abstract decryptChar(charCodeMessage: number, charCodeKey: number): number;
 }
 
-export const encryptAddition = (message: string, key: string): string => {
-    checkParams(message, key);
-    let encryptedString = "";
-    for (let index = 0; index < message.length; index++) {
-        encryptedString += message.charCodeAt(index) + key.charCodeAt(index)
+class AdditionEncrypt extends templateAlgo {
+    encryptChar(charCodeMessage: number, charCodeKey: number): number {
+        return charCodeMessage + charCodeKey;
     }
-    return encryptedString;
+    decryptChar(charCodeMessage: number, charCodeKey: number): number {
+        return charCodeMessage - charCodeKey;
+    }
 }
 
-export const decryptAdditon = (message: string, key: string): string => {
-    checkParams(message, key);
-    let decryptedString = "";
-    for (let index = 0; index < message.length; index++) {
-        decryptedString += message.charCodeAt(index) + key.charCodeAt(index)
+class XOREncrypt extends templateAlgo {
+    encryptChar(charCodeMessage: number, charCodeKey: number): number {
+        return charCodeMessage ^ charCodeKey;
     }
-    return decryptedString;
+    decryptChar(charCodeMessage: number, charCodeKey: number): number {
+        return charCodeMessage ^ charCodeKey;
+    }
 }
 
-const checkParams = (message: string, key: string) => {
-    if (message.length < key.length) {
-        throw new Error("key needs to atleast length of the message");
-    }
-}
+export const xorEncrypt = new XOREncrypt();
+export const additionEncrypt = new AdditionEncrypt();
